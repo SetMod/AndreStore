@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  aggreagator:
+    image: ${DOCKER_REGISTRY-}aggreagator
+    build:
+      context: .
+      dockerfile: Aggreagator/Dockerfile
+
+  ocelot.api.getaway:
+    image: ${DOCKER_REGISTRY-}ocelotapigetaway
+    build:
+      context: .
+      dockerfile: Ocelot.API.Getaway/Dockerfile
+

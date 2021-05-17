@@ -1,0 +1,199 @@
+{
+  "Routes": [
+    //Catalog API---------------------------------
+
+
+    //Items
+    {
+      "DownstreamPathTemplate": "/Items",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Catalog/Items",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    //Items/{id}
+    {
+      "DownstreamPathTemplate": "/Items/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Catalog/Items/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+
+
+
+    //Deliverys
+    {
+      "DownstreamPathTemplate": "/Deliverys",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Catalog/Deliverys",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    //Deliverys{id}
+    {
+      "DownstreamPathTemplate": "/Deliverys/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Catalog/Deliverys/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+
+
+
+    //Cart API---------------------------------
+
+
+    //Cart
+    {
+      "DownstreamPathTemplate": "/Cart",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/Cart",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+
+    //Cart/{id}
+    {
+      "DownstreamPathTemplate": "/Cart/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/Cart/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+
+
+
+    //Cart/cartItems
+    {
+      "DownstreamPathTemplate": "/Cart/cartItems",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/Cart/cartItems",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    //Cart/cartItems/{id}
+    {
+      "DownstreamPathTemplate": "/Cart/cartItems/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/Cart/cartItems/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+
+
+
+    //Ordering API---------------------------------
+
+
+    //Ordering
+    {
+      "DownstreamPathTemplate": "/Ordering",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8005"
+        }
+      ],
+      "UpstreamPathTemplate": "/Orders",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+
+    //Ordering/{id}
+    {
+      "DownstreamPathTemplate": "/Ordering/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8005"
+        }
+      ],
+      "UpstreamPathTemplate": "/Orders/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+
+
+
+    //Customer API---------------------------------
+
+
+    //Customer
+    {
+      "DownstreamPathTemplate": "/Customer",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8007"
+        }
+      ],
+      "UpstreamPathTemplate": "/Profile",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+
+    //Customer/{id}
+    {
+      "DownstreamPathTemplate": "/Customer/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8007"
+        }
+      ],
+      "UpstreamPathTemplate": "/Profile/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5011"
+  }
+}
