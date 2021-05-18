@@ -1,6 +1,8 @@
 ﻿using Cart.API.Entities;
+using Cart.API.Helpers;
 using Cart.API.Interfaces.IRpositories;
 using Cart.API.Interfaces.IServices;
+using Cart.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,11 @@ namespace Cart.API.Services
         {
             return await _cartItemsRepository.GetAllAsync();
         }
+        public async Task<PagedList<CartItems>> GetAllCartItemsPaginationAsync(CartItemsParameters cartItemParams)
+        {
+            return await _cartItemsRepository.GetAllItemsPagination(cartItemParams);
+        }
+
         public async Task<CartItems> GetCartItemByIdAsync(int Id)
         {
             return await _cartItemsRepository.GetByIdAsync(Id);

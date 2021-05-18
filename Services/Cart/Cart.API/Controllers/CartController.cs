@@ -1,5 +1,6 @@
 ﻿using Cart.API.Entities;
 using Cart.API.Interfaces.IServices;
+using Cart.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,11 +15,9 @@ namespace Cart.API.Controllers
     public class CartController : ControllerBase
     {
         private ICartService _cartService;
-        private ICartItemsService _cartItemsService;
-        public CartController(ICartService cartService, ICartItemsService cartItemsService)
+        public CartController(ICartService cartService)
         {
             _cartService = cartService;
-            _cartItemsService = cartItemsService;
         }
 
         // GET: /Cart Get all Carts
@@ -62,43 +61,6 @@ namespace Cart.API.Controllers
         public async Task<IActionResult> DeleteCartAsync(int id)
         {
             return Ok(await _cartService.DeleteCartAsync(id));
-        }
-        #endregion
-
-        #region CartItemsAPIs
-        // GET: /Cart/cartItems Get all Carts
-        [HttpGet("cartItems")]
-        public async Task<IActionResult> GetAllCartItemsAsync()//IEnumerable<CartItems>
-        {
-            return Ok(await _cartItemsService.GetAllCartItemsAsync());
-        }
-
-        // GET: /Cart/cartItems/{Id} Get Cart by id
-        [HttpGet("cartItems/{Id}")]
-        public async Task<IActionResult> GetCartItemByIdAsync(int Id)
-        {
-            return Ok(await _cartItemsService.GetCartItemByIdAsync(Id));
-        }
-
-        // POST: /Cart/cartItems Add new Cart
-        [HttpPost("cartItems")]
-        public async Task<IActionResult> AddCartItemAsync([FromBody] CartItems cart)
-        {
-            return Ok(await _cartItemsService.AddCartItemAsync(cart));
-        }
-
-        // PUT: /Cart/cartItems Update existing Cart
-        [HttpPut("cartItems")]
-        public async Task<IActionResult> UpdateCartItemAsync([FromBody] CartItems cartItem)
-        {
-            return Ok(await _cartItemsService.UpdateCartItemAsync(cartItem));
-        }
-
-        // DELETE: /Cart/cartItems/{Id} Delete existing cartItem
-        [HttpDelete("cartItems/{id}")]
-        public async Task<IActionResult> DeleteCartItemAsync(int id)
-        {
-            return Ok(await _cartItemsService.DeleteCartItemAsync(id));
         }
         #endregion
     }
