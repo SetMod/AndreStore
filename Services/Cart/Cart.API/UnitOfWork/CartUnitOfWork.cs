@@ -1,4 +1,5 @@
-﻿using Cart.API.Interfaces.IServices;
+﻿using Cart.API.Interfaces.IRpositories;
+using Cart.API.Interfaces.IServices;
 using Cart.API.Interfaces.IUnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,17 @@ namespace Cart.API.UnitOfWork
 {
     public class CartUnitOfWork : IUnitOfWork
     {
-        private readonly ICartService _cartService;
-        private readonly ICartItemsService _cartItemsService;
+        private readonly ICartRepository _cartRepository;
+        private readonly ICartItemsRepository _cartItemsRepository;
         public CartUnitOfWork(
-            ICartService cartService, 
-            ICartItemsService cartItemsService)
+            ICartRepository cartRepository, 
+            ICartItemsRepository cartItemsRepository)
         {
-            _cartService = cartService;
-            _cartItemsService = cartItemsService;
+            _cartRepository = cartRepository;
+            _cartItemsRepository = cartItemsRepository;
         }
-        public ICartService cartService { get { return _cartService; } }
+        public ICartRepository cartRepository { get { return _cartRepository; } }
 
-        public ICartItemsService cartItemsService { get { return _cartItemsService; } }
+        public ICartItemsRepository cartItemsRepository { get { return _cartItemsRepository; } }
     }
 }

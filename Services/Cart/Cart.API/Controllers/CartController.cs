@@ -1,5 +1,5 @@
 ﻿using Cart.API.Entities;
-using Cart.API.Interfaces.IUnitOfWork;
+using Cart.API.Interfaces.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,90 +13,92 @@ namespace Cart.API.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private IUnitOfWork _unitOfWork;
-        public CartController(IUnitOfWork unitOfWork)
+        private ICartService _cartService;
+        private ICartItemsService _cartItemsService;
+        public CartController(ICartService cartService, ICartItemsService cartItemsService)
         {
-            _unitOfWork = unitOfWork;
+            _cartService = cartService;
+            _cartItemsService = cartItemsService;
         }
 
         // GET: /Cart Get all Carts
         [HttpGet("hello")]
-        public string GetHello()
+        public IActionResult GetHello()
         {
-            return "Hello from Cart!";
+            return Ok("Hello from Cart!");
         }
 
         #region CartAPIs
         // GET: /Cart Get all Carts
         [HttpGet]
-        public async Task<IEnumerable<Entities.Cart>> GetAllCartsAsync()
+        public async Task<IActionResult> GetAllCartsAsync()//Task<IEnumerable<Entities.Cart>>
         {
-            return await _unitOfWork.cartService.GetAllCartsAsync();
+            return Ok(await _cartService.GetAllCartsAsync());
         }
 
         // GET: /Cart/{Id} Get Cart by id
         [HttpGet("{Id}")]
-        public async Task<Entities.Cart> GetCartByIdAsync(int Id)
+        public async Task<IActionResult> GetCartByIdAsync(int Id)//Task<Entities.Cart>
         {
-            return await _unitOfWork.cartService.GetCartByIdAsync(Id);
+            return Ok(await _cartService.GetCartByIdAsync(Id));
         }
 
         // POST: /Cart Add new Cart
         [HttpPost]
-        public async Task<bool> AddCartAsync([FromBody] Entities.Cart cart)
+        public async Task<IActionResult> AddCartAsync([FromBody] Entities.Cart cart)
         {
-            return await _unitOfWork.cartService.AddCartAsync(cart);
+            return Ok(await _cartService.AddCartAsync(cart));
         }
 
         // PUT: /Cart Update existing Cart
         [HttpPut]
-        public async Task<bool> UpdateCartAsync([FromBody] Entities.Cart cart)
+        public async Task<IActionResult> UpdateCartAsync([FromBody] Entities.Cart cart)
         {
-            return await _unitOfWork.cartService.UpdateCartAsync(cart);
+            return Ok(await _cartService.UpdateCartAsync(cart));
         }
 
         // DELETE: /Cart/{Id} Delete existing Cart
         [HttpDelete("{id}")]
-        public async Task<bool> DeleteCartAsync(int id)
+        public async Task<IActionResult> DeleteCartAsync(int id)
         {
-            return await _unitOfWork.cartService.DeleteCartAsync(id);
+            return Ok(await _cartService.DeleteCartAsync(id));
         }
         #endregion
 
         #region CartItemsAPIs
         // GET: /Cart/cartItems Get all Carts
         [HttpGet("cartItems")]
-        public async Task<IEnumerable<CartItems>> GetAllCartItemsAsync()
+        public async Task<IActionResult> GetAllCartItemsAsync()//IEnumerable<CartItems>
         {
-            return await _unitOfWork.cartItemsService.GetAllCartItemsAsync();
+            return Ok(await _cartItemsService.GetAllCartItemsAsync());
         }
 
         // GET: /Cart/cartItems/{Id} Get Cart by id
         [HttpGet("cartItems/{Id}")]
-        public async Task<CartItems> GetCartItemByIdAsync(int Id)
+        public async Task<IActionResult> GetCartItemByIdAsync(int Id)
         {
-            return await _unitOfWork.cartItemsService.GetCartItemByIdAsync(Id);
+            return Ok(await _cartItemsService.GetCartItemByIdAsync(Id));
         }
 
         // POST: /Cart/cartItems Add new Cart
         [HttpPost("cartItems")]
-        public async Task<bool> AddCartItemAsync([FromBody] CartItems cart)
+        public async Task<IActionResult> AddCartItemAsync([FromBody] CartItems cart)
         {
-            return await _unitOfWork.cartItemsService.AddCartItemAsync(cart);
+            return Ok(await _cartItemsService.AddCartItemAsync(cart));
         }
 
         // PUT: /Cart/cartItems Update existing Cart
         [HttpPut("cartItems")]
-        public async Task<bool> UpdateCartItemAsync([FromBody] CartItems cartItem)
+        public async Task<IActionResult> UpdateCartItemAsync([FromBody] CartItems cartItem)
         {
-            return await _unitOfWork.cartItemsService.UpdateCartItemAsync(cartItem);
+            return Ok(await _cartItemsService.UpdateCartItemAsync(cartItem));
         }
 
         // DELETE: /Cart/cartItems/{Id} Delete existing cartItem
         [HttpDelete("cartItems/{id}")]
-        public async Task<bool> DeleteCartItemAsync(int id)
+        public async Task<IActionResult> DeleteCartItemAsync(int id)
         {
-            return await _unitOfWork.cartItemsService.DeleteCartItemAsync(id);
+            return Ok(await _cartItemsService.DeleteCartItemAsync(id));
         }
         #endregion
     }

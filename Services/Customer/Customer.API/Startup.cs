@@ -5,19 +5,13 @@ using Customer.API.Interfaces.IRepositories;
 using Customer.API.Interfaces.IServices;
 using Customer.API.Repositories;
 using Customer.API.Services;
+using Customer.API.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Customer.API
 {
@@ -43,6 +37,8 @@ namespace Customer.API
             #region SQL services
             services.AddTransient<ICustomerService, CustomerService>();
             #endregion
+
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddDbContext<CustomerDbContext>();
 

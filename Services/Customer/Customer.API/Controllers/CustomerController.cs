@@ -26,33 +26,55 @@ namespace Customer.API.Controllers
 
         #region CustomerAPI
         [HttpGet]
-        public async Task<IEnumerable<Entities.Customer>> GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers()
         {
-            return await _customerService.GetAllCustomersAysnc();
+            var res = await _customerService.GetAllCustomersAysnc();
+            if (res == null)
+            {
+                return NotFound();
+            }
+            return Ok(res);
         }
 
         [HttpGet("{id}")]
-        public async Task<Entities.Customer> GetCustomerByIdAsync(int id)
+        public async Task<IActionResult> GetCustomerByIdAsync(int id)
         {
-            return await _customerService.GetCustomerByIdAysnc(id);
+            var res = await _customerService.GetCustomerByIdAysnc(id);
+            if (res == null)
+            {
+                return NotFound(res);
+            }
+            return Ok(res);
         }
 
         [HttpPost]
-        public async Task<Entities.Customer> AddCustomerAsync([FromBody] Entities.Customer item)
+        public async Task<IActionResult> AddCustomerAsync([FromBody] Entities.Customer item)
         {
-            return await _customerService.AddCustomerAysnc(item);
+            var res = await _customerService.AddCustomerAysnc(item);
+            if (res == null)
+            {
+                return BadRequest(res);
+            }
+            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
+            var loactionUri = baseUrl + "/" + res.Id.ToString();
+            return Created(loactionUri, res);
         }
 
         [HttpPut]
-        public async Task<Entities.Customer> UpdateCustomerAsync([FromBody] Entities.Customer item)
+        public async Task<IActionResult> UpdateCustomerAsync([FromBody] Entities.Customer item)
         {
-            return await _customerService.UpdateCustomerAysnc(item);
+            return Ok(await _customerService.UpdateCustomerAysnc(item));
         }
 
         [HttpDelete("{id}")]
-        public async Task<Entities.Customer> DeleteCustomerAsync(int id)
+        public async Task<IActionResult> DeleteCustomerAsync(int id)
         {
-            return await _customerService.DeleteCustomerAysnc(id);
+            var res = await _customerService.DeleteCustomerAysnc(id);
+            if (res == null)
+            {
+                return NotFound(res);
+            }
+            return Ok(res);
         }
         #endregion
     }
