@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Ordering.API.Mapper;
 using Ordering.BLL.Interfaces.IServices;
 using Ordering.BLL.Interfaces.IUnitOfWork;
 using Ordering.BLL.Services;
@@ -38,6 +39,10 @@ namespace Oredering.API
 
             #region EntityFramework
             services.AddDbContext<OrderingDbContext>();
+            #endregion
+
+            #region Automapper
+            services.AddAutoMapper(typeof(MappingProfile));
             #endregion
 
             #region UnitOfWork

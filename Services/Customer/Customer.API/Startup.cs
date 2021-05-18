@@ -30,11 +30,11 @@ namespace Customer.API
             services.AddControllers();
 
 
-            #region SQL repositories
+            #region Repositories
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             #endregion
 
-            #region SQL services
+            #region Services
             services.AddTransient<ICustomerService, CustomerService>();
             #endregion
 

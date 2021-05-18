@@ -1,4 +1,6 @@
-﻿using Customer.API.Interfaces.IServices;
+﻿using AutoMapper;
+using Customer.API.DTO;
+using Customer.API.Interfaces.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,10 +13,12 @@ namespace Customer.API.Controllers
     [Route("[controller]")]
     public class CustomerController : ControllerBase
     {
-        private ICustomerService _customerService { get; }
-        public CustomerController(ICustomerService deliveryService)
+        private readonly ICustomerService _customerService;
+        private readonly IMapper _mapper;
+        public CustomerController(ICustomerService deliveryService, IMapper mapper)
         {
             _customerService = deliveryService;
+            _mapper = mapper;
         }
 
         [Route("/")]
@@ -29,41 +33,48 @@ namespace Customer.API.Controllers
         public async Task<IActionResult> GetAllCustomers()
         {
             var res = await _customerService.GetAllCustomersAysnc();
-            if (res == null)
-            {
-                return NotFound();
-            }
-            return Ok(res);
+            var resDto = _mapper.Map<IEnumerable<CustomerDTO>>(res);
+            return Ok(resDto);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomerByIdAsync(int id)
         {
             var res = await _customerService.GetCustomerByIdAysnc(id);
+            var resDto = _mapper.Map<CustomerDTO>(res);
             if (res == null)
             {
-                return NotFound(res);
+                return NotFound(resDto);
             }
-            return Ok(res);
+            return Ok(resDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCustomerAsync([FromBody] Entities.Customer item)
+        public async Task<IActionResult> AddCustomerAsync([FromBody] CustomerDTO itemDTO)
         {
+            var item = _mapper.Map<Entities.Customer>(itemDTO);
             var res = await _customerService.AddCustomerAysnc(item);
             if (res == null)
             {
                 return BadRequest(res);
             }
+            var resDto = _mapper.Map<CustomerDTO>(res);
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var loactionUri = baseUrl + "/" + res.Id.ToString();
-            return Created(loactionUri, res);
+            var loactionUri = baseUrl + "/Customer/"+ res.Id.ToString();
+            return Created(loactionUri, resDto);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateCustomerAsync([FromBody] Entities.Customer item)
+        public async Task<IActionResult> UpdateCustomerAsync([FromBody] CustomerDTO itemDTO)
         {
-            return Ok(await _customerService.UpdateCustomerAysnc(item));
+            var item = _mapper.Map<Entities.Customer>(itemDTO);
+            var res = await _customerService.UpdateCustomerAysnc(item);
+            if (res == null)
+            {
+                return BadRequest(res);
+            }
+            var resDto = _mapper.Map<CustomerDTO>(res);
+            return Ok(resDto);
         }
 
         [HttpDelete("{id}")]
@@ -74,7 +85,8 @@ namespace Customer.API.Controllers
             {
                 return NotFound(res);
             }
-            return Ok(res);
+            var resDto = _mapper.Map<CustomerDTO>(res);
+            return Ok(resDto);
         }
         #endregion
     }

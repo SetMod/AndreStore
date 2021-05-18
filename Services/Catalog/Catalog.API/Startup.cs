@@ -1,8 +1,11 @@
+using Catalog.API.Filters;
+using Catalog.API.Mapper;
 using Catalog.Application.Interfaces;
 using Catalog.Application.Interfaces.IMongo;
 using Catalog.Infrastructure.Repositories;
 using Catalog.Infrastructure.RepUnitOfWork;
 using Catalog.Infrastructure.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,14 +29,22 @@ namespace Catalog.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options => {
+                options.EnableEndpointRouting = true;
+                options.Filters.Add<ValidationFilter>();
+                })
+                .AddFluentValidation(s =>
+                {
+                    s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                    s.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                });
 
-            #region SQL repositories
+            #region  Repositories
             services.AddTransient<IItemRepository, ItemRepository>();
             services.AddTransient<IDeliveryRepository, DeliveryRepository>();
             #endregion
 
-            #region SQL services
+            #region  Services
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IDeliveryService, DeliveryService>();
             #endregion
@@ -42,7 +53,11 @@ namespace Catalog.API
             services.Configure<MongoDBSettings>(Configuration.GetSection(nameof(MongoDBSettings)));
             services.AddSingleton<IMongoDBSettings>(sp => sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
             #endregion
-            
+
+            #region Automapper
+            services.AddAutoMapper(typeof(MappingProfile));
+            #endregion
+
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
