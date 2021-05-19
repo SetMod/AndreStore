@@ -4,9 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Catalog.Application.Interfaces.IMongo;
-using Catalog.Application.Helpers;
 using System.Threading.Tasks;
-using Ordering.DAL.Models;
+using System.Collections;
+using Catalog.Application.Helpers;
+using Catalog.Application.Models;
 
 namespace Catalog.Infrastructure.Repositories
 {
@@ -16,6 +17,12 @@ namespace Catalog.Infrastructure.Repositories
         {
             settings.CollectionName = "Item";
         }
-
+        public async Task<IEnumerable<Item>> GetAllItemsPaginationAsync(ItemParameters itemParams)
+        {
+            var res = await GetAllAsync();
+            return PagedList<Item>.ToPagedList(res,
+                itemParams.PageNumber,
+                itemParams.PageSize);
+        }
     }
 }

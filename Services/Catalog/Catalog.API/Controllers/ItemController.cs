@@ -5,7 +5,9 @@ using Catalog.Application.Items.Commands.AddItem;
 using Catalog.Application.Items.Commands.DeleteItem;
 using Catalog.Application.Items.Commands.UpdateItem;
 using Catalog.Application.Items.Queries.GetAllItems;
+using Catalog.Application.Items.Queries.GetAllItemsPagination;
 using Catalog.Application.Items.Queries.GetItemById;
+using Catalog.Application.Models;
 using Catalog.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +40,17 @@ namespace Catalog.API.Controllers
             var result = await _meadiator.Send(query);
             return Ok(result);
             //var res = await _itemService.GetAllItemsAysnc();
+            //var resDTO = _mapper.Map<IEnumerable<ItemDTO>>(res);
+            //return Ok(resDTO);
+        }
+
+        [HttpGet("pagination")]
+        public async Task<IActionResult> GetAllItemsPagination(ItemParameters itemParams) //IEnumerable<Item>
+        {
+            var query = new GetAllItemsPagiantionQuery(itemParams);
+            var result = await _meadiator.Send(query);
+            return Ok(result);
+            //var res = await _itemService.GetAllItemsPaginationAsync(itemParams);
             //var resDTO = _mapper.Map<IEnumerable<ItemDTO>>(res);
             //return Ok(resDTO);
         }

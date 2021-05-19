@@ -1,4 +1,4 @@
-﻿namespace Ordering.DAL.Models
+﻿namespace Catalog.Application.Models
 {
 	public abstract class QueryStringParameters
 	{

@@ -1,4 +1,5 @@
 ﻿using Catalog.Application.Interfaces;
+using Catalog.Application.Models;
 using Catalog.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,11 @@ namespace Catalog.Infrastructure.Services
         public async Task<IEnumerable<Item>> GetAllItemsAysnc()
         {
             return await _unitOfWork.itemRepository.GetAllAsync();
+        }
+
+        public async Task<IEnumerable<Item>> GetAllItemsPaginationAsync(ItemParameters itemParams)
+        {
+            return await _unitOfWork.itemRepository.GetAllItemsPaginationAsync(itemParams);
         }
 
         public async Task<Item> GetItemByIdAysnc(int Id)
