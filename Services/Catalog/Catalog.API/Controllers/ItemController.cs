@@ -45,7 +45,7 @@ namespace Catalog.API.Controllers
         }
 
         [HttpGet("pagination")]
-        public async Task<IActionResult> GetAllItemsPagination(ItemParameters itemParams) //IEnumerable<Item>
+        public async Task<IActionResult> GetAllItemsPagination([FromQuery] ItemParameters itemParams) //IEnumerable<Item>
         {
             var query = new GetAllItemsPagiantionQuery(itemParams);
             var result = await _meadiator.Send(query);
