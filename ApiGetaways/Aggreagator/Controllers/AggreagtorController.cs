@@ -28,7 +28,7 @@ namespace Aggreagator.Controllers
 
         [HttpGet("{userName}", Name = "GetSomething")]
         [ProducesResponseType(typeof(ResultModel), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<ResultModel>> GetSomething(int customerId)
+        public async Task<ActionResult<ResultModel>> GetCart(int customerId)
         {
             var catalog = await _catalogService.GetCatalog();
             var cart = await _cartService.GetCart(customerId);

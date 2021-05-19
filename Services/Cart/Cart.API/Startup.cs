@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,18 @@ namespace Cart.API
             #endregion
 
             services.AddTransient<IUnitOfWork, CartUnitOfWork>();
+
+            #region Connection
             services.AddTransient<ICartConnectionFactory, CartConnectionFactory>();
+            #endregion
+
+            #region Redis
+            services.AddSingleton<IConnectionMultiplexer>(x =>
+            {
+                return ConnectionMultiplexer.Connect(Configuration.GetValue<string>("RedisConnection"));
+            });
+            services.AddTransient<IRedisCacheService, RedisCacheService>();
+            #endregion
 
             #region Swagger
             services.AddSwaggerGen(c =>
