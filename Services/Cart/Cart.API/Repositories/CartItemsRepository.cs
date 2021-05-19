@@ -18,6 +18,11 @@ namespace Cart.API.Repositories
 
         public async Task<PagedList<CartItems>> GetAllItemsPagination(CartItemsParameters cartItemParams)
         {
+            // Filtering example
+            //var owners = FindByCondition(o => o.DateOfBirth.Year >= ownerParameters.MinYearOfBirth &&
+            //                o.DateOfBirth.Year <= ownerParameters.MaxYearOfBirth)
+            //            .OrderBy(on => on.Name);
+
             var res = await GetAllAsync();
             return PagedList<CartItems>.ToPagedList(res,
                 cartItemParams.PageNumber,

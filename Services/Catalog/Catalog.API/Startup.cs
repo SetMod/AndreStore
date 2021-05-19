@@ -1,11 +1,13 @@
 using Catalog.API.Filters;
 using Catalog.API.Mapper;
+using Catalog.Application;
 using Catalog.Application.Interfaces;
 using Catalog.Application.Interfaces.IMongo;
 using Catalog.Infrastructure.Repositories;
 using Catalog.Infrastructure.RepUnitOfWork;
 using Catalog.Infrastructure.Services;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -58,6 +60,9 @@ namespace Catalog.API
             services.AddAutoMapper(typeof(MappingProfile));
             #endregion
 
+            #region MediatR + Automapper
+            services.AddApplicationServices();
+            #endregion
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
