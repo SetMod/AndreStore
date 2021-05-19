@@ -26,7 +26,7 @@ namespace Aggreagator.Controllers
             _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
         }
 
-        [HttpGet("{userName}", Name = "GetSomething")]
+        [HttpGet("GetCart")]
         [ProducesResponseType(typeof(ResultModel), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ResultModel>> GetCart(int customerId)
         {

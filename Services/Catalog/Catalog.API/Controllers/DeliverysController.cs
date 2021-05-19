@@ -18,15 +18,15 @@ namespace Catalog.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DeliveryController : ControllerBase
+    public class DeliverysController : ControllerBase
     {
         private readonly IMediator _meadiator;
-        public DeliveryController(IMediator meadiator)
+        public DeliverysController(IMediator meadiator)
         {
             _meadiator = meadiator;
         }
 
-        #region DeliveryAPI
+        #region DeliverysAPI
         [HttpGet]
         public async Task<IActionResult> GetAllDeliverys() //IEnumerable<Delivery>
         {

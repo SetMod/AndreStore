@@ -14,8 +14,8 @@ namespace Cart.API.Repositories
     public class GenericRpository<T> : IGenericRepository<T> where T : IEntity
     {
         protected ICartConnectionFactory _connectionFactory;
-        private readonly string _tableName;
-        private readonly string _IdName;
+        protected string _tableName { get; set; }
+        protected string _IdName { get; set; }
 
         public GenericRpository(ICartConnectionFactory connectionFactory, string tableName, string idName = "Id")
         {

@@ -21,6 +21,7 @@ namespace Aggreagator.Services
         public async Task<CartModel> GetCart(int customerId)
         {
             var response = await _client.GetAsync($"/Cart/{customerId}");
+            var responseItems = await _client.GetAsync($"/CartItems");
             return await response.ReadContentAs<CartModel>();
         }
     }

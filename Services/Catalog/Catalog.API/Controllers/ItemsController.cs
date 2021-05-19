@@ -20,12 +20,12 @@ namespace Catalog.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ItemController : ControllerBase
+    public class ItemsController : ControllerBase
     {
         private readonly IItemService _itemService;
         private readonly IMapper _mapper;
         private readonly IMediator _meadiator;
-        public ItemController(IItemService itemService, IMapper mapper, IMediator meadiator)
+        public ItemsController(IItemService itemService, IMapper mapper, IMediator meadiator)
         {
             _itemService = itemService;
             _mapper = mapper;

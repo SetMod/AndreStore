@@ -1,11 +1,14 @@
 using Cart.API.ConnectionFactory;
+using Cart.API.GrpcServices;
 using Cart.API.Interfaces.IConnectionFacory;
 using Cart.API.Interfaces.IRpositories;
 using Cart.API.Interfaces.IServices;
 using Cart.API.Interfaces.IUnitOfWork;
+using Cart.API.Mapper;
 using Cart.API.Repositories;
 using Cart.API.Services;
 using Cart.API.UnitOfWork;
+using Discount.GrpcService.Protos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -53,13 +56,23 @@ namespace Cart.API
             services.AddTransient<ICartConnectionFactory, CartConnectionFactory>();
             #endregion
 
-            #region Redis
-            services.AddSingleton<IConnectionMultiplexer>(x =>
-            {
-                return ConnectionMultiplexer.Connect(Configuration.GetValue<string>("RedisConnection"));
-            });
-            services.AddTransient<IRedisCacheService, RedisCacheService>();
+            #region Automapper
+            services.AddAutoMapper(typeof(MappingProfile));
             #endregion
+
+            #region Grpc Configuration
+            services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>
+                        (o => o.Address = new Uri(Configuration["GrpcSettings:DiscountUrl"]));
+            services.AddScoped<DiscountGrpcService>();
+            #endregion
+
+            //#region Redis
+            //services.AddSingleton<IConnectionMultiplexer>(x =>
+            //{
+            //    return ConnectionMultiplexer.Connect(Configuration.GetValue<string>("RedisConnection"));
+            //});
+            //services.AddTransient<IRedisCacheService, RedisCacheService>();
+            //#endregion
 
             #region Swagger
             services.AddSwaggerGen(c =>

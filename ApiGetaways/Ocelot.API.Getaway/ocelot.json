@@ -97,9 +97,9 @@
 
 
 
-    //Cart/cartItems
+    //CartItems
     {
-      "DownstreamPathTemplate": "/Cart/cartItems",
+      "DownstreamPathTemplate": "/CartItems",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -107,13 +107,13 @@
           "Port": "8003"
         }
       ],
-      "UpstreamPathTemplate": "/Cart/cartItems",
+      "UpstreamPathTemplate": "/CartItems",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
-    //Cart/cartItems/{id}
+    //CartItems/{id}
     {
-      "DownstreamPathTemplate": "/Cart/cartItems/{id}",
+      "DownstreamPathTemplate": "/CartItems/{id}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -121,7 +121,20 @@
           "Port": "8003"
         }
       ],
-      "UpstreamPathTemplate": "/Cart/cartItems/{id}",
+      "UpstreamPathTemplate": "/CartItems/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    //CartItems/cartId={cartId}
+    {
+      "DownstreamPathTemplate": "/CartItems/cartId={cartId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/CartItems/cartId={cartId}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
 
