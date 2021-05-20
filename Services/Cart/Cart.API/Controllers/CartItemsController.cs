@@ -17,101 +17,99 @@ namespace Cart.API.Controllers
     [ApiController]
     public class CartItemsController : ControllerBase
     {
-        //private readonly ICartItemsService _cartItemsService;
-        //private readonly IRedisCacheService _cacheService;
-        //private readonly IMapper _mapper;
-        //public CartItemsController(ICartItemsService cartItemsService, IRedisCacheService cacheService, IMapper mapper)
-        //{
-        //    _cartItemsService = cartItemsService;
-        //    _cacheService = cacheService;
-        //    _mapper = mapper;
-        //}
         private readonly DiscountGrpcService _discountGrpcService;
         private readonly ICartItemsService _cartItemsService;
+        private readonly IRedisCacheService _cacheService;
         private readonly IMapper _mapper;
-        public CartItemsController(DiscountGrpcService discountGrpcService, ICartItemsService cartItemsService, IMapper mapper)
+        public CartItemsController(
+            DiscountGrpcService discountGrpcService,
+            ICartItemsService cartItemsService,
+            IRedisCacheService cacheService,
+            IMapper mapper)
         {
             _discountGrpcService = discountGrpcService;
             _cartItemsService = cartItemsService;
+            _cacheService = cacheService;
             _mapper = mapper;
         }
+
 
         #region CartItemsAPIs
         // GET: /CartItems Get all CartItems
         [HttpGet]
         public async Task<IActionResult> GetAllCartItemsAsync(string? recordKey = null)//IEnumerable<CartItems>
         {
-            //if (string.IsNullOrEmpty(recordKey))
-            //{
+            if (string.IsNullOrEmpty(recordKey))
+            {
                 var cartItems = await _cartItemsService.GetAllCartItemsAsync();
                 var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
                 return Ok(cartItemsDTO);
-            //}
+            }
 
-            //var casheItem = await _cacheService.GetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey);
+            var casheItem = await _cacheService.GetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey);
 
-            //if (casheItem == null)
-            //{
-            //    var cartItems = await _cartItemsService.GetAllCartItemsAsync();
-            //    var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
-            //    await _cacheService.SetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey, cartItemsDTO, TimeSpan.FromSeconds(3600));
-            //}
+            if (casheItem == null)
+            {
+                var cartItems = await _cartItemsService.GetAllCartItemsAsync();
+                var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
+                await _cacheService.SetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey, cartItemsDTO, TimeSpan.FromSeconds(3600));
+            }
 
-            //return Ok(casheItem);
+            return Ok(casheItem);
         }
 
         // GET: /CartItems/pagination Get all CartItems
         [HttpGet("pagination")]
         public async Task<IActionResult> GetAllCartItemsAsync([FromQuery] CartItemsParameters cartItemParams, string? recordKey = null)
         {
-            //if (string.IsNullOrEmpty(recordKey))
-            //{
+            if (string.IsNullOrEmpty(recordKey))
+            {
                 var cartItems = await _cartItemsService.GetAllCartItemsPaginationAsync(cartItemParams);
                 var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
                 return Ok(cartItemsDTO);
-            //}
+            }
 
-            //var casheItem = await _cacheService.GetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey);
+            var casheItem = await _cacheService.GetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey);
 
-            //if (casheItem == null)
-            //{
-            //    var cartItems = await _cartItemsService.GetAllCartItemsPaginationAsync(cartItemParams);
-            //    var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
-            //    await _cacheService.SetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey, cartItemsDTO, TimeSpan.FromSeconds(3600));
-            //}
+            if (casheItem == null)
+            {
+                var cartItems = await _cartItemsService.GetAllCartItemsPaginationAsync(cartItemParams);
+                var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
+                await _cacheService.SetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey, cartItemsDTO, TimeSpan.FromSeconds(3600));
+            }
 
-            //return Ok(casheItem);
+            return Ok(casheItem);
         }
 
         // GET: /CartItems/ Get all CartItems
         [HttpGet("cartId={cartId}")]
-        public async Task<IActionResult> GetAllCartItemsForCartAsync( int cartId, [FromQuery] CartItemsParameters cartItemParams, string? recordKey = null)
+        public async Task<IActionResult> GetAllCartItemsForCartAsync(int cartId, [FromQuery] CartItemsParameters cartItemParams, string? recordKey = null)
         {
-            //if (string.IsNullOrEmpty(recordKey))
-            //{
-            var cartItems = await _cartItemsService.GetAllCartItemsForCartAsync(cartId, cartItemParams);
-            var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
+            if (string.IsNullOrEmpty(recordKey))
+            {
+                var cartItems = await _cartItemsService.GetAllCartItemsForCartAsync(cartId, cartItemParams);
+                var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
 
-            //gRPC
-            //foreach (var item in cartItemsDTO)
-            //{
-            //    var coupon = await _discountGrpcService.GetDiscount(item.ProductName);
-            //    item.Price -= coupon.Amount;
-            //}
+                //gRPC
+                //foreach (var item in cartItemsDTO)
+                //{
+                //    var coupon = await _discountGrpcService.GetDiscount(item.ProductName);
+                //    item.Price -= coupon.Amount;
+                //}
 
-            return Ok(cartItemsDTO);
-            //}
+                return Ok(cartItemsDTO);
+            }
 
-            //var casheItem = await _cacheService.GetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey);
+            var casheItem = await _cacheService.GetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey);
 
-            //if (casheItem == null)
-            //{
-            //    var cartItems = await _cartItemsService.GetAllCartItemsPaginationAsync(cartItemParams);
-            //    var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
-            //    await _cacheService.SetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey, cartItemsDTO, TimeSpan.FromSeconds(3600));
-            //}
+            if (casheItem == null)
+            {
+                var cartItems = await _cartItemsService.GetAllCartItemsPaginationAsync(cartItemParams);
+                var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
+                await _cacheService.SetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey, cartItemsDTO, TimeSpan.FromSeconds(3600));
+            }
 
-            //return Ok(casheItem);
+            return Ok(casheItem);
         }
 
         // GET: /CartItems/{Id} Get CartItem by id

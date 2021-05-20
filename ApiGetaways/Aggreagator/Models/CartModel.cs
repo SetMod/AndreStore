@@ -10,6 +10,6 @@ namespace Aggreagator.Models
         public int Id { get; set; }
         public int TotalPrice { get; set; }
         public int CustomerId { get; set; }
-        public List<CartItems> Items { get; set; }
+        public List<CartItemModel> Items { get; set; }
     }
 }

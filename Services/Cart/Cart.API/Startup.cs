@@ -66,13 +66,13 @@ namespace Cart.API
             services.AddScoped<DiscountGrpcService>();
             #endregion
 
-            //#region Redis
-            //services.AddSingleton<IConnectionMultiplexer>(x =>
-            //{
-            //    return ConnectionMultiplexer.Connect(Configuration.GetValue<string>("RedisConnection"));
-            //});
-            //services.AddTransient<IRedisCacheService, RedisCacheService>();
-            //#endregion
+            #region Redis
+            services.AddSingleton<IConnectionMultiplexer>(x =>
+            {
+                return ConnectionMultiplexer.Connect(Configuration.GetValue<string>("RedisConnection"));
+            });
+            services.AddTransient<IRedisCacheService, RedisCacheService>();
+            #endregion
 
             #region Swagger
             services.AddSwaggerGen(c =>

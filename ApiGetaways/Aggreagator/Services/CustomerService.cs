@@ -1,5 +1,4 @@
 ﻿using Aggreagator.Models;
-using Aggreagator.Extensions;
 using Aggreagator.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,38 +8,35 @@ using System.Threading.Tasks;
 
 namespace Aggreagator.Services
 {
-    public class OrderingService : IOrderingService
+    public class CustomerService : ICustomerService
     {
-
         private readonly HttpClient _client;
-
-        public OrderingService(HttpClient client)
+        public CustomerService(HttpClient client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
-        public Task<bool> AddOrder(int customerId, OrdersModel order)
+        public Task<bool> AddCustomer(CustomerModel customer)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteOrder(int customerId, int orderId)
+        public Task<bool> DeleteCustomer(int customerId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<OrdersModel> GetOrder(int customerId, int orderId)
+        public Task<IEnumerable<CustomerModel>> GetAllCustomers()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<OrdersModel>> GetOrders(int customerId)
+        public Task<CustomerModel> GetCustomer(int customerId)
         {
-            var response = await _client.GetAsync($"/Ordering/{customerId}");
-            return await response.ReadContentAs<List<OrdersModel>>();
+            throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateOrder(int customerId, OrdersModel order)
+        public Task<bool> UpdateCustomer(CustomerModel customer)
         {
             throw new NotImplementedException();
         }

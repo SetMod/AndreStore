@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Aggreagator.Models
 {
-    public class CartItems
+    public class CartItemModel
     {
     }
 }

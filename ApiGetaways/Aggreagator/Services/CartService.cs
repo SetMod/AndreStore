@@ -18,11 +18,36 @@ namespace Aggreagator.Services
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
+        public Task<bool> AddCartItem(int customerId, CartItemModel cart)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteCartItem(int customerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<CartItemModel>> GetAllCartItems()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<CartModel> GetCart(int customerId)
         {
             var response = await _client.GetAsync($"/Cart/{customerId}");
             var responseItems = await _client.GetAsync($"/CartItems");
             return await response.ReadContentAs<CartModel>();
+        }
+
+        public Task<CartItemModel> GetCartItem(int customerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateCartItem(int customerId, CartItemModel cart)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,6 +8,10 @@ namespace Aggreagator.Services.Interfaces
 {
     public interface ICartService
     {
-        Task<CartModel> GetCart(int customerId);
+        Task<IEnumerable<CartItemModel>> GetAllCartItems();
+        Task<CartItemModel> GetCartItem(int customerId);
+        Task<bool> AddCartItem(int customerId, CartItemModel cart);
+        Task<bool> UpdateCartItem(int customerId, CartItemModel cart);
+        Task<bool> DeleteCartItem(int customerId);
     }
 }
