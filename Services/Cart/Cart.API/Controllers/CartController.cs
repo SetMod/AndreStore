@@ -1,6 +1,7 @@
 ﻿using Cart.API.Entities;
 using Cart.API.Interfaces.IServices;
 using Cart.API.Models;
+using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,10 +15,12 @@ namespace Cart.API.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private ICartService _cartService;
-        public CartController(ICartService cartService)
+        private readonly ICartService _cartService;
+        private readonly IPublishEndpoint _publishEndpoint;
+        public CartController(ICartService cartService, IPublishEndpoint publishEndpoint)
         {
             _cartService = cartService;
+            _publishEndpoint = publishEndpoint;
         }
 
         // GET: /Cart Get all Carts
@@ -68,6 +71,27 @@ namespace Cart.API.Controllers
         public async Task<IActionResult> DeleteCartAsync(int id)
         {
             return Ok(await _cartService.DeleteCartAsync(id));
+        }
+
+        [HttpPost("Checkout")]
+        public async Task<IActionResult> Checkout([FromBody] CartCheckout cartCheckout)
+        {
+
+            // get existing basket with total price
+            var cart = await _cartService.GetCartByCustomerIdAsync(cartCheckout.CustomerId);
+            if (cart == null)
+            {
+                return BadRequest();
+            }
+
+            // send checkout event to rabbitmq
+            cartCheckout.TotalPrice = cart.TotalPrice;
+            await _publishEndpoint.Publish<CartCheckout>(cartCheckout);
+
+            // remove the basket
+            await _cartService.DeleteCartAsync(cart.Id);
+
+            return Accepted();
         }
         #endregion
     }

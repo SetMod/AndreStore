@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System;
+using MassTransit;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,6 +73,15 @@ namespace Cart.API
                 return ConnectionMultiplexer.Connect(Configuration.GetValue<string>("RedisConnection"));
             });
             services.AddTransient<IRedisCacheService, RedisCacheService>();
+            #endregion
+
+            #region MassTransit-RabbitMQ
+            services.AddMassTransit(config => {
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                });
+            });
+            services.AddMassTransitHostedService();
             #endregion
 
             #region Swagger

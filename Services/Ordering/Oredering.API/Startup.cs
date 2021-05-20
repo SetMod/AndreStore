@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,8 @@ using Ordering.BLL.Services;
 using Ordering.BLL.UnitOfWork;
 using Ordering.DAL.Interfaces.IRepositories;
 using Ordering.DAL.Repositories;
+using Oredering.API.EventBusConsumer;
+using Oredering.API.Events;
 using Oredering.DAL.OrderigDbContext;
 
 namespace Oredering.API
@@ -47,6 +50,23 @@ namespace Oredering.API
 
             #region UnitOfWork
             services.AddTransient<IOrderingUnitOfWork, OrderingUnitOfWork>();
+            #endregion
+
+            #region MassTransit-RabbitMQ
+            services.AddMassTransit(config => {
+
+                config.AddConsumer<CartCheckoutConsumer>();
+
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cfg.UseHealthCheck(ctx);
+
+                    cfg.ReceiveEndpoint(EventBusConstants.CartCheckoutQueue, c => {
+                        c.ConfigureConsumer<CartCheckoutConsumer>(ctx);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
             #endregion
 
             #region Swagger

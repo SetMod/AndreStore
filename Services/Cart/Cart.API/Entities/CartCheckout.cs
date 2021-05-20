@@ -1,11 +1,11 @@
-﻿using Ordering.DAL.Interfaces.IEntities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Ordering.DAL.Entities
+namespace Cart.API.Entities
 {
-    public class Orders : IEntity
+    public class CartCheckout
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
