@@ -1,5 +1,7 @@
-using Aggreagator.Services;
-using Aggreagator.Services.Interfaces;
+
+using Aggreagator.API.Services;
+using Aggregator.API.Services;
+using Aggregator.API.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aggreagator
+namespace Aggregator.API
 {
     public class Startup
     {

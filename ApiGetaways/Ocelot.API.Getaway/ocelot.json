@@ -204,7 +204,41 @@
       ],
       "UpstreamPathTemplate": "/Profile/{id}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+
+
+
+    //Aggregator API---------------------------------
+
+
+    ///Aggregator/GetCart/{customerId}
+    {
+      "DownstreamPathTemplate": "/Aggregator/GetCart/{customerId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5051"
+        }
+      ],
+      "UpstreamPathTemplate": "/GetCartItems/{customerId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
     }
+    //,
+    ////Customer/{id}
+    //{
+    //  "DownstreamPathTemplate": "/Customer/{id}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": "5051"
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/Profile/{id}",
+    //  "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    //}
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:5011"

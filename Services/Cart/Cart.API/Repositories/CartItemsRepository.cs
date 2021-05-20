@@ -30,7 +30,7 @@ namespace Cart.API.Repositories
                 cartItemParams.PageNumber,
                 cartItemParams.PageSize);
         }
-        public async Task<PagedList<CartItems>> GetAllCartItemsForCartAsync(int cartId, CartItemsParameters cartItemParams)
+        public async Task<PagedList<Item>> GetAllCartItemsForCartAsync(int cartId, CartItemsParameters cartItemParams)
         {
 
             var query = "SP_GetRecordByIdFromTable";
@@ -38,10 +38,20 @@ namespace Cart.API.Repositories
             using (var db = _connectionFactory.GetSqlConnection)
             {
                 this._IdName = "CartId";
-                var items = await db.QueryAsync<CartItems>(query,
+                var cartItems = await db.QueryAsync<CartItems>(query,
                     new { P_tableName = this._tableName, P_IdName = this._IdName, P_Id = cartId },
                     commandType: CommandType.StoredProcedure);
-                return PagedList<CartItems>.ToPagedList(items,
+
+                var items = new List<Item>();
+                foreach (var item in cartItems)
+                {
+                    var itemCart = await db.QueryFirstOrDefaultAsync<Item>(query,
+                        new { P_tableName = "Items", P_IdName = "Id", P_Id = item.ItemId },
+                        commandType: CommandType.StoredProcedure);
+                    itemCart.Amount = item.Amount;
+                    items.Add(itemCart);
+                }
+                return PagedList<Item>.ToPagedList(items,
                 cartItemParams.PageNumber,
                 cartItemParams.PageSize);
             }

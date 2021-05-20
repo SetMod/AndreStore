@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ocelot", "Ocelot", "{46616D
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{38A59551-2124-4CB1-AFE3-BB0F19ADE77D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggreagator", "ApiGetaways\Aggreagator\Aggreagator.csproj", "{D53890DE-A117-43F2-BBF4-D37E90B5C9D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aggregator.API", "ApiGetaways\Aggreagator\Aggregator.API.csproj", "{D53890DE-A117-43F2-BBF4-D37E90B5C9D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ocelot.API.Getaway", "ApiGetaways\Ocelot.API.Getaway\Ocelot.API.Getaway.csproj", "{15FA054B-36F7-43B5-AE54-3DDAD4B68C06}"
 EndProject
@@ -55,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.DAL", "Services\Or
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Customer", "Customer", "{872496F2-199C-448A-B732-8A93E1968A6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.API", "Services\Customer\Customer.API\Customer.API.csproj", "{3455E32C-4F66-403E-B5C6-E59C46681D8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.API", "Services\Customer\Customer.API\Customer.API.csproj", "{3455E32C-4F66-403E-B5C6-E59C46681D8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

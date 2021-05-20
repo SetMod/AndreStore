@@ -1,15 +1,14 @@
-﻿using Aggreagator.Models;
-using System;
+﻿using Aggregator.API.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aggreagator.Services.Interfaces
+namespace Aggregator.API.Services.Interfaces
 {
     public interface ICartService
     {
-        Task<IEnumerable<CartItemModel>> GetAllCartItems();
-        Task<CartItemModel> GetCartItem(int customerId);
+        Task<IEnumerable<ItemsModel>> GetAllCartItems(int cartId);
+        Task<CartItemModel> GetCartItem(int customerId, int cartItemId);
+        Task<CartModel> GetCart(int customerId);
         Task<bool> AddCartItem(int customerId, CartItemModel cart);
         Task<bool> UpdateCartItem(int customerId, CartItemModel cart);
         Task<bool> DeleteCartItem(int customerId);

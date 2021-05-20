@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aggreagator
+namespace Aggregator.API
 {
     public class Program
     {

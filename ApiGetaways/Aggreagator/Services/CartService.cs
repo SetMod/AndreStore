@@ -1,13 +1,12 @@
-﻿using Aggreagator.Models;
-using Aggreagator.Extensions;
-using Aggreagator.Services.Interfaces;
+﻿using Aggregator.API.Models;
+using Aggregator.API.Services.Interfaces;
+using Aggregator.API.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Aggreagator.Services
+namespace Aggreagator.API.Services
 {
     public class CartService : ICartService
     {
@@ -18,36 +17,41 @@ namespace Aggreagator.Services
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
-        public Task<bool> AddCartItem(int customerId, CartItemModel cart)
+        public async Task<IEnumerable<ItemsModel>> GetAllCartItems(int cartId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteCartItem(int customerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<CartItemModel>> GetAllCartItems()
-        {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/CartItems/cartId={cartId}");
+            return await response.ReadContentAs<IEnumerable<ItemsModel>>();
         }
 
         public async Task<CartModel> GetCart(int customerId)
         {
-            var response = await _client.GetAsync($"/Cart/{customerId}");
-            var responseItems = await _client.GetAsync($"/CartItems");
+            var response = await _client.GetAsync($"/Cart/customerId={customerId}");
             return await response.ReadContentAs<CartModel>();
         }
 
-        public Task<CartItemModel> GetCartItem(int customerId)
+        public async Task<CartItemModel> GetCartItem(int customerId, int cartItemId)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Cart/{customerId}");
+            return await response.ReadContentAs<CartItemModel>();
         }
 
-        public Task<bool> UpdateCartItem(int customerId, CartItemModel cart)
+        public async Task<bool> AddCartItem(int customerId, CartItemModel cart)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Cart/{customerId}");
+            return await response.ReadContentAs<bool>();
         }
+
+        public async Task<bool> UpdateCartItem(int customerId, CartItemModel cartItem)
+        {
+            var response = await _client.GetAsync($"/Cart/{customerId}");
+            return await response.ReadContentAs<bool>();
+        }
+
+        public async Task<bool> DeleteCartItem(int customerId)
+        {
+            var response = await _client.GetAsync($"/Cart/{customerId}");
+            return await response.ReadContentAs<bool>();
+        }
+
     }
 }

@@ -1,13 +1,12 @@
-﻿using Aggreagator.Models;
-using Aggreagator.Extensions;
-using Aggreagator.Services.Interfaces;
+﻿using Aggregator.API.Models;
+using Aggregator.API.Services.Interfaces;
+using Aggregator.API.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Aggreagator.Services
+namespace Aggregator.API.Services
 {
     public class OrderingService : IOrderingService
     {
@@ -19,19 +18,22 @@ namespace Aggreagator.Services
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
-        public Task<bool> AddOrder(int customerId, OrdersModel order)
+        public async Task<bool> AddOrder(int customerId, OrdersModel order)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Ordering/{customerId}");
+            return await response.ReadContentAs<bool>();
         }
 
-        public Task<bool> DeleteOrder(int customerId, int orderId)
+        public async Task<bool> DeleteOrder(int customerId, int orderId)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Ordering/{customerId}");
+            return await response.ReadContentAs<bool>();
         }
 
-        public Task<OrdersModel> GetOrder(int customerId, int orderId)
+        public async Task<OrdersModel> GetOrder(int customerId, int orderId)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Ordering/{customerId}");
+            return await response.ReadContentAs<OrdersModel>();
         }
 
         public async Task<IEnumerable<OrdersModel>> GetOrders(int customerId)
@@ -40,9 +42,10 @@ namespace Aggreagator.Services
             return await response.ReadContentAs<List<OrdersModel>>();
         }
 
-        public Task<bool> UpdateOrder(int customerId, OrdersModel order)
+        public async Task<bool> UpdateOrder(int customerId, OrdersModel order)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Ordering/{customerId}");
+            return await response.ReadContentAs<bool>();
         }
     }
 }

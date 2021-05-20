@@ -42,6 +42,13 @@ namespace Cart.API.Controllers
             return Ok(await _cartService.GetCartByIdAsync(Id));
         }
 
+        // GET: /Cart/customerId={Id} Get Cart by id
+        [HttpGet("customerId={customerId}")]
+        public async Task<IActionResult> GetCartByCustomerIdAsync(int customerId)
+        {
+            return Ok(await _cartService.GetCartByCustomerIdAsync(customerId));
+        }
+
         // POST: /Cart Add new Cart
         [HttpPost]
         public async Task<IActionResult> AddCartAsync([FromBody] Entities.Cart cart)

@@ -8,5 +8,6 @@ namespace Cart.API.Interfaces.IRpositories
 {
     public interface ICartRepository : IGenericRepository<Cart.API.Entities.Cart>
     {
+        Task<Entities.Cart> GetCartByCustomerIdAsync(int customerId);
     }
 }

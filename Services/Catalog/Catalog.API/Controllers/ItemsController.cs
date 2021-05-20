@@ -55,6 +55,7 @@ namespace Catalog.API.Controllers
             //return Ok(resDTO);
         }
 
+        // /Items/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItemByIdAsync(int id)
         {

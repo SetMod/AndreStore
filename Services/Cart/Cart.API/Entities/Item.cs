@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Aggregator.API.Models
+namespace Cart.API.Entities
 {
-    public class ItemsModel
+    public class Item
     {
         public int Id { get; set; }
         public decimal Price { get; set; }

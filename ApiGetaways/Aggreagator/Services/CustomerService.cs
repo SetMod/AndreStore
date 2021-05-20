@@ -1,12 +1,12 @@
-﻿using Aggreagator.Models;
-using Aggreagator.Services.Interfaces;
+﻿using Aggregator.API.Models;
+using Aggregator.API.Services.Interfaces;
+using Aggregator.API.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Aggreagator.Services
+namespace Aggregator.API.Services
 {
     public class CustomerService : ICustomerService
     {
@@ -16,29 +16,34 @@ namespace Aggreagator.Services
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
-        public Task<bool> AddCustomer(CustomerModel customer)
+        public async Task<IEnumerable<CustomerModel>> GetAllCustomers()
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Profile");
+            return await response.ReadContentAs<IEnumerable<CustomerModel>>();
         }
 
-        public Task<bool> DeleteCustomer(int customerId)
+        public async Task<CustomerModel> GetCustomer(int customerId)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Profile");
+            return await response.ReadContentAs<CustomerModel>();
         }
 
-        public Task<IEnumerable<CustomerModel>> GetAllCustomers()
+        public async Task<bool> AddCustomer(CustomerModel customer)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Profile");
+            return await response.ReadContentAs<bool>();
+        }
+        public async Task<bool> UpdateCustomer(CustomerModel customer)
+        {
+            var response = await _client.GetAsync($"/Profile");
+            return await response.ReadContentAs<bool>();
         }
 
-        public Task<CustomerModel> GetCustomer(int customerId)
+        public async Task<bool> DeleteCustomer(int customerId)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Profile");
+            return await response.ReadContentAs<bool>();
         }
 
-        public Task<bool> UpdateCustomer(CustomerModel customer)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

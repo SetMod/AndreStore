@@ -23,7 +23,7 @@ namespace Cart.API.Services
         {
             return await _cartItemsRepository.GetAllAsync();
         }
-        public async Task<PagedList<CartItems>> GetAllCartItemsForCartAsync(int cartId, CartItemsParameters cartItemParams)
+        public async Task<PagedList<Item>> GetAllCartItemsForCartAsync(int cartId, CartItemsParameters cartItemParams)
         {
             return await _cartItemsRepository.GetAllCartItemsForCartAsync(cartId, cartItemParams);
         }

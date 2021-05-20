@@ -25,6 +25,10 @@ namespace Cart.API.Services
         {
             return await _cartRepository.GetByIdAsync(Id);
         }
+        public async Task<Entities.Cart> GetCartByCustomerIdAsync(int customerId)
+        {
+            return await _cartRepository.GetCartByCustomerIdAsync(customerId);
+        }
         public async Task<bool> AddCartAsync(Entities.Cart cart)
         {
             return await _cartRepository.AddAsync(cart);

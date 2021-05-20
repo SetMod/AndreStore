@@ -81,14 +81,14 @@ namespace Cart.API.Controllers
             return Ok(casheItem);
         }
 
-        // GET: /CartItems/ Get all CartItems
+        // GET: /CartItems/cartId={cartId} Get all CartItems
         [HttpGet("cartId={cartId}")]
         public async Task<IActionResult> GetAllCartItemsForCartAsync(int cartId, [FromQuery] CartItemsParameters cartItemParams, string? recordKey = null)
         {
             if (string.IsNullOrEmpty(recordKey))
             {
                 var cartItems = await _cartItemsService.GetAllCartItemsForCartAsync(cartId, cartItemParams);
-                var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
+                //var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
 
                 //gRPC
                 //foreach (var item in cartItemsDTO)
@@ -97,7 +97,7 @@ namespace Cart.API.Controllers
                 //    item.Price -= coupon.Amount;
                 //}
 
-                return Ok(cartItemsDTO);
+                return Ok(cartItems);
             }
 
             var casheItem = await _cacheService.GetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey);
