@@ -1,5 +1,6 @@
 ﻿using Cart.API.Interfaces.IRpositories;
 using Cart.API.Services;
+using FluentAssertions;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -86,9 +87,13 @@ namespace Cart.Tests
             //Act
             var cartRes = await _cartServiceMock.UpdateCartAsync(cart);
             //Assert
+            
             Assert.Equal(expected, cartRes);
             Assert.True(cartRes);
+            //Fluent Assertion
+            cartRes.Should().Be(expected);
         }
+
         [Fact]
         public async Task DeleteCartAsync_ReturnsTrue()
         {
