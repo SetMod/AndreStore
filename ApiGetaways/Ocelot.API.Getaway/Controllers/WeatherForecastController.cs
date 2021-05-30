@@ -27,6 +27,7 @@ namespace Ocelot.API.Getaway.Controllers
                 "Cart - https://localhost:8003/swagger",
                 "Orders - https://localhost:8005/swagger",
                 "Customer - https://localhost:8007/swagger",
+                "Aggregator - https://localhost:5051/swagger",
             };
             return list;
         }

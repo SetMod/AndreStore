@@ -34,7 +34,7 @@ namespace Catalog.API.Controllers
 
         #region ItemsAPI
         [HttpGet]
-        public async Task<IActionResult> GetAllItems() //IEnumerable<Item>
+        public async Task<IActionResult> GetAllItems()
         {
             var query = new GetAllItemsQuery();
             var result = await _meadiator.Send(query);
@@ -45,7 +45,7 @@ namespace Catalog.API.Controllers
         }
 
         [HttpGet("pagination")]
-        public async Task<IActionResult> GetAllItemsPagination([FromQuery] ItemParameters itemParams) //IEnumerable<Item>
+        public async Task<IActionResult> GetAllItemsPagination([FromQuery] ItemParameters itemParams)
         {
             var query = new GetAllItemsPagiantionQuery(itemParams);
             var result = await _meadiator.Send(query);

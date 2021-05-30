@@ -6,9 +6,8 @@ namespace Catalog.Infrastructure.Repositories
 {
     public class DeliveryRepository : GenericRepository<Delivery>, IDeliveryRepository
     {
-        public DeliveryRepository(IMongoDBSettings settings) : base(settings)
+        public DeliveryRepository(IMongoDBSettings settings) : base(settings, "Delivery")
         {
-            settings.CollectionName = "Delivery";
         }
     }
 }

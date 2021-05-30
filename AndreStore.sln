@@ -57,6 +57,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Customer", "Customer", "{87
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.API", "Services\Customer\Customer.API\Customer.API.csproj", "{3455E32C-4F66-403E-B5C6-E59C46681D8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cart.Tests", "Services\Cart\Cart.Tests\Cart.Tests.csproj", "{6E20DB36-5418-45BD-B51F-7A08F3725208}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,10 @@ Global
 		{3455E32C-4F66-403E-B5C6-E59C46681D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3455E32C-4F66-403E-B5C6-E59C46681D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3455E32C-4F66-403E-B5C6-E59C46681D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E20DB36-5418-45BD-B51F-7A08F3725208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E20DB36-5418-45BD-B51F-7A08F3725208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E20DB36-5418-45BD-B51F-7A08F3725208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E20DB36-5418-45BD-B51F-7A08F3725208}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +156,7 @@ Global
 		{0177B3E7-9041-4A03-B801-CB2A730B2D4F} = {35A402CA-5F4D-4215-AB13-6E546230D881}
 		{872496F2-199C-448A-B732-8A93E1968A6D} = {2B49AAFE-7065-49AD-87EF-562C267E28EB}
 		{3455E32C-4F66-403E-B5C6-E59C46681D8F} = {872496F2-199C-448A-B732-8A93E1968A6D}
+		{6E20DB36-5418-45BD-B51F-7A08F3725208} = {5CB05641-73C5-4937-93C7-AE8D03CB8ACC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2B2635EB-36A0-4714-A57F-CD3D272FC829}

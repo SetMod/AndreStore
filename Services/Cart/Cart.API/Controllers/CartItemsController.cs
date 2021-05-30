@@ -83,12 +83,12 @@ namespace Cart.API.Controllers
 
         // GET: /CartItems/cartId={cartId} Get all CartItems
         [HttpGet("cartId={cartId}")]
-        public async Task<IActionResult> GetAllCartItemsForCartAsync(int cartId, [FromQuery] CartItemsParameters cartItemParams, string? recordKey = null)
+        public async Task<IActionResult> GetAllCartItemsForCartAsync(int cartId, string? recordKey = null)
         {
             if (string.IsNullOrEmpty(recordKey))
             {
-                var cartItems = await _cartItemsService.GetAllCartItemsForCartAsync(cartId, cartItemParams);
-                //var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
+                var cartItems = await _cartItemsService.GetAllCartItemsForCartAsync(cartId);
+                var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
 
                 //gRPC
                 //foreach (var item in cartItemsDTO)
@@ -97,14 +97,14 @@ namespace Cart.API.Controllers
                 //    item.Price -= coupon.Amount;
                 //}
 
-                return Ok(cartItems);
+                return Ok(cartItemsDTO);
             }
 
             var casheItem = await _cacheService.GetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey);
 
             if (casheItem == null)
             {
-                var cartItems = await _cartItemsService.GetAllCartItemsPaginationAsync(cartItemParams);
+                var cartItems = await _cartItemsService.GetAllCartItemsForCartAsync(cartId);
                 var cartItemsDTO = _mapper.Map<IEnumerable<CartItemsDTO>>(cartItems);
                 await _cacheService.SetRecordAsync<IEnumerable<CartItemsDTO>>(recordKey, cartItemsDTO, TimeSpan.FromSeconds(3600));
             }
@@ -123,7 +123,8 @@ namespace Cart.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCartItemAsync([FromBody] CartItems cart)
         {
-            return Ok(await _cartItemsService.AddCartItemAsync(cart));
+            var res = await _cartItemsService.AddCartItemAsync(cart);
+            return res == true? (IActionResult)Ok(res) : BadRequest(res);
         }
 
         // PUT: /CartItems Update existing CartItem

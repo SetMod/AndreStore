@@ -8,6 +8,7 @@ namespace Ordering.BLL.Interfaces.IServices
 {
     public interface IOrderingService
     {
+        Task<IEnumerable<Orders>> GetAllOrdersByCustomerIdAsync(int customerId);
         Task<IEnumerable<Orders>> GetAllOrders();
         Task<Orders> GetOrder(int id);
         Task<Orders> AddOrder(Orders order);

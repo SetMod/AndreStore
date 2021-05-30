@@ -25,9 +25,8 @@ namespace Customer.API.EfDbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            modelBuilder.Entity<Entities.Customer>().ToTable("Customer")//puvyazka tabluci People do User
-                .Property(u => u.Id).HasColumnName("Id");//puklad perevuznacenya spivstavlenya stovpcya
+            modelBuilder.Entity<Entities.Customer>().ToTable("Customer");//puvyazka tabluci People do User
+                /*.Property(u => u.Id).HasColumnName("Id");*///puklad perevuznacenya spivstavlenya stovpcya
             //  modelBuilder.Entity<User>().HasKey(u => u.Ident);                                           //pruklad vstanovlenya kluca
             //  modelBuilder.Entity<User>().HasKey(u => new { u.PassportSeria, u.PassportNumber});          //pruklad stvorenya kluca z dekilkox vlastuvostey
             //  modelBuilder.Entity<User>().HasKey(u => u.Id).HasName("UsersPrimaryKey");                   //pruklad nalashtuvanya IMYA obmejenya, uake zadayetsya dlya primary key

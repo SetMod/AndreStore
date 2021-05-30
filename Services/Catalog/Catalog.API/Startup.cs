@@ -7,7 +7,6 @@ using Catalog.Infrastructure.Repositories;
 using Catalog.Infrastructure.RepUnitOfWork;
 using Catalog.Infrastructure.Services;
 using FluentValidation.AspNetCore;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

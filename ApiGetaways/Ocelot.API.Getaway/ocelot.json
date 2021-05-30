@@ -17,6 +17,20 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
+    //Items/pagination
+    {
+      "DownstreamPathTemplate": "/Items/pagination",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Catalog/Items/Pagination",
+      "UpstreamHttpMethod": [ "GET" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
     //Items/{id}
     {
       "DownstreamPathTemplate": "/Items/{id}",
@@ -81,9 +95,9 @@
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
 
-    //Cart/{id}
+    //Cart/{customerId}
     {
-      "DownstreamPathTemplate": "/Cart/{id}",
+      "DownstreamPathTemplate": "/Cart/{customerId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -91,7 +105,20 @@
           "Port": "8003"
         }
       ],
-      "UpstreamPathTemplate": "/Cart/{id}",
+      "UpstreamPathTemplate": "/Cart/{customerId}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    //Cart/customerId={customerId}
+    {
+      "DownstreamPathTemplate": "/Cart/customerId={customerId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/Cart/customerId={customerId}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
 
@@ -172,6 +199,20 @@
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
 
+    //Ordering/customerId={customerId}
+    {
+      "DownstreamPathTemplate": "/Ordering/customerId={customerId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8005"
+        }
+      ],
+      "UpstreamPathTemplate": "/Orders/customerId={customerId}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+
 
 
     //Customer API---------------------------------
@@ -189,6 +230,34 @@
       ],
       "UpstreamPathTemplate": "/Profile",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    //Customer/Login
+    {
+      "DownstreamPathTemplate": "/Customer/Login",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8007"
+        }
+      ],
+      "UpstreamPathTemplate": "/Login",
+      "UpstreamHttpMethod": [ "POST" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    //Customer/Registration
+    {
+      "DownstreamPathTemplate": "/Customer/Registration",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8007"
+        }
+      ],
+      "UpstreamPathTemplate": "/Registration",
+      "UpstreamHttpMethod": [ "POST" ],
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
 

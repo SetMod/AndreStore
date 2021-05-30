@@ -19,7 +19,7 @@
     },
     "Cart.API": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "Cart/hello",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

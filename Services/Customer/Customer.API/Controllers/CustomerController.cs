@@ -59,9 +59,35 @@ namespace Customer.API.Controllers
                 return BadRequest(res);
             }
             var resDto = _mapper.Map<CustomerDTO>(res);
-            var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-            var loactionUri = baseUrl + "/Customer/"+ res.Id.ToString();
-            return Created(loactionUri, resDto);
+            return Ok(resDto);
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] CustomerDTO customerDTO)
+        {
+            var customers = await _customerService.GetAllCustomersAysnc();
+            var customer = customers.First(customer => customer.Email == customerDTO.Email);
+
+            if (customer == null) return BadRequest("User not found");
+            if (customer.Password != customerDTO.Password) return BadRequest("Wrong password");
+
+            return Ok(customer);
+        }
+
+        [HttpPost("Registration")]
+        public async Task<IActionResult> SignUp([FromBody] CustomerDTO customerDTO)
+        {
+            var customers = await _customerService.GetAllCustomersAysnc();
+            var customerExists = customers.FirstOrDefault(customer => customer.Email == customerDTO.Email);
+
+            if (customerExists != null) return BadRequest("User already exists");
+
+            var customer = _mapper.Map<Entities.Customer>(customerDTO);
+            var res = await _customerService.AddCustomerAysnc(customer);
+
+            if (res == null) return BadRequest(res);
+
+            return Ok(true);
         }
 
         [HttpPut]

@@ -12,7 +12,7 @@ namespace Cart.API.Interfaces.IServices
     {
         public Task<IEnumerable<CartItems>> GetAllCartItemsAsync();
         public Task<PagedList<CartItems>> GetAllCartItemsPaginationAsync(CartItemsParameters cartItemParams);
-        public Task<PagedList<Item>> GetAllCartItemsForCartAsync(int cartId, CartItemsParameters cartItemParams);
+        public Task<IEnumerable<CartItems>> GetAllCartItemsForCartAsync(int cartId);
         public Task<CartItems> GetCartItemByIdAsync(int Id);
         public Task<bool> AddCartItemAsync(CartItems cart);
         public Task<bool> UpdateCartItemAsync(CartItems cart);

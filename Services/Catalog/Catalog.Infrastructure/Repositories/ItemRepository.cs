@@ -13,9 +13,8 @@ namespace Catalog.Infrastructure.Repositories
 {
     public class ItemRepository : GenericRepository<Item>, IItemRepository
     {
-        public ItemRepository(IMongoDBSettings settings) : base(settings)
+        public ItemRepository(IMongoDBSettings settings) : base(settings, "Items")
         {
-            settings.CollectionName = "Item";
         }
         public async Task<IEnumerable<Item>> GetAllItemsPaginationAsync(ItemParameters itemParams)
         {

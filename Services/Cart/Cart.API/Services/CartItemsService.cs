@@ -23,9 +23,9 @@ namespace Cart.API.Services
         {
             return await _cartItemsRepository.GetAllAsync();
         }
-        public async Task<PagedList<Item>> GetAllCartItemsForCartAsync(int cartId, CartItemsParameters cartItemParams)
+        public async Task<IEnumerable<CartItems>> GetAllCartItemsForCartAsync(int cartId)
         {
-            return await _cartItemsRepository.GetAllCartItemsForCartAsync(cartId, cartItemParams);
+            return await _cartItemsRepository.GetAllCartItemsForCartAsync(cartId);
         }
         
         public async Task<PagedList<CartItems>> GetAllCartItemsPaginationAsync(CartItemsParameters cartItemParams)
@@ -37,14 +37,17 @@ namespace Cart.API.Services
         {
             return await _cartItemsRepository.GetByIdAsync(Id);
         }
+
         public async Task<bool> AddCartItemAsync(CartItems cart)
         {
             return await _cartItemsRepository.AddAsync(cart);
         }
+
         public async Task<bool> UpdateCartItemAsync(CartItems cart)
         {
             return await _cartItemsRepository.UpdateAsync(cart);
         }
+
         public async Task<bool> DeleteCartItemAsync(int Id)
         {
             return await _cartItemsRepository.DeleteAsync(Id);

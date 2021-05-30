@@ -28,10 +28,22 @@ namespace Aggregator.API.Controllers
         [ProducesResponseType(typeof(ItemsModel), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCart(int customerId)
         {
-            var cart = await _cartService.GetCart(customerId);
-            var cartItems = await _cartService.GetAllCartItems(cart.Id);
-            //var orders = await _orderService.GetOrders(customerId);
-            return Ok(cartItems);
+            //try
+            //{
+                var cart = await _cartService.GetCart(customerId);
+                if (cart == null)
+                {
+                    return BadRequest($"No cart for user with id={customerId}");
+                }
+                var cartItems = await _cartService.GetAllCartItems(cart.Id);
+                //var orders = await _orderService.GetOrders(customerId);
+                return Ok(cartItems);
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e);
+            //    return BadRequest(null);
+            //}
         }
 
         [HttpGet]

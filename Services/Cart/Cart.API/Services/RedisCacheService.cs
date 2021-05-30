@@ -18,9 +18,7 @@ namespace Cart.API.Services
 
         public async Task<T> GetRecordAsync<T>(string recordId)
         {
-            var db = _conMultiplexer.GetDatabase();
-            var jsonData =  await db.StringGetAsync(recordId);
-
+            var jsonData = await _conMultiplexer.GetDatabase().StringGetAsync(recordId);
             if (string.IsNullOrEmpty(jsonData))
             {
                 return default(T);

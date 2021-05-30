@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Catalog.Application.Interfaces
 {
-    public interface IGenericRepository<T> where T: IEntity
+    public interface IGenericRepository<T> where T:class, IEntity
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(int Id);

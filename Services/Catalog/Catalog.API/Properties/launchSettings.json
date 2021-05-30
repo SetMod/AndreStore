@@ -19,7 +19,7 @@
     },
     "Catalog.API": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "catalog",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

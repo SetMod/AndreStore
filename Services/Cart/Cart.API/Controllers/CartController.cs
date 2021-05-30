@@ -16,10 +16,12 @@ namespace Cart.API.Controllers
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
+        private readonly ICartItemsService _cartItemsService;
         private readonly IPublishEndpoint _publishEndpoint;
-        public CartController(ICartService cartService, IPublishEndpoint publishEndpoint)
+        public CartController(ICartService cartService, ICartItemsService cartItemsService, IPublishEndpoint publishEndpoint)
         {
             _cartService = cartService;
+            _cartItemsService = cartItemsService;
             _publishEndpoint = publishEndpoint;
         }
 
@@ -33,23 +35,35 @@ namespace Cart.API.Controllers
         #region CartAPIs
         // GET: /Cart Get all Carts
         [HttpGet]
-        public async Task<IActionResult> GetAllCartsAsync()//Task<IEnumerable<Entities.Cart>>
+        public async Task<IActionResult> GetAllCartsAsync()
         {
             return Ok(await _cartService.GetAllCartsAsync());
         }
 
-        // GET: /Cart/{Id} Get Cart by id
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetCartByIdAsync(int Id)//Task<Entities.Cart>
+        // GET: /Cart/{customerId} Get Cart by id
+        [HttpGet("{customerId}")]
+        public async Task<IActionResult> GetCartByIdAsync(int customerId)
         {
-            return Ok(await _cartService.GetCartByIdAsync(Id));
+            //await _cartService.GetCartByIdAsync(Id);
+            var res = await _cartService.GetCartByCustomerIdAsync(customerId);
+            if (res == null)
+            {
+                return BadRequest($"No cart for user with id={customerId}");
+            }
+            return Ok(res);
         }
 
         // GET: /Cart/customerId={Id} Get Cart by id
         [HttpGet("customerId={customerId}")]
         public async Task<IActionResult> GetCartByCustomerIdAsync(int customerId)
         {
-            return Ok(await _cartService.GetCartByCustomerIdAsync(customerId));
+            var res = await _cartService.GetCartByCustomerIdAsync(customerId);
+            if (res == null)
+            {
+                return BadRequest($"No cart for user with id={customerId}");
+            }
+            var cartItems = await _cartItemsService.GetAllCartItemsForCartAsync(res.Id);
+            return Ok(cartItems);
         }
 
         // POST: /Cart Add new Cart

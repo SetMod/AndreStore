@@ -25,9 +25,21 @@ namespace Oredering.API.Controllers
         #region APIs
         // GET: /Ordering Get all Orders
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAllOrders()
         {
             var res = await _orderService.GetAllOrders();
+            if (res == null)
+            {
+                return NotFound(res);
+            }
+            var resDTO = _mapper.Map<IEnumerable<OrdersDTO>>(res);
+            return Ok(resDTO);
+        }
+        
+        [HttpGet("customerId={customerId}")]
+        public async Task<IActionResult> GetAllOrdersByCustomerIdAsync(int customerId)
+        {
+            var res = await _orderService.GetAllOrdersByCustomerIdAsync(customerId);
             if (res == null)
             {
                 return NotFound(res);
@@ -38,7 +50,7 @@ namespace Oredering.API.Controllers
 
         // GET: /Ordering/{id} Get Order by id
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetOrder(int id)
         {
             var res = await _orderService.GetOrder(id);
             var resDTO = _mapper.Map<IEnumerable<OrdersDTO>>(res);
@@ -47,7 +59,7 @@ namespace Oredering.API.Controllers
 
         // POST: /Ordering Add new Order
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] OrdersDTO orderDTO)
+        public async Task<IActionResult> AddOrder([FromBody] OrdersDTO orderDTO)
         {
             var order = _mapper.Map<Orders>(orderDTO);
             var res = await _orderService.AddOrder(order);
@@ -63,7 +75,7 @@ namespace Oredering.API.Controllers
 
         // PUT: /Ordering Update existing Order
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] OrdersDTO orderDTO)
+        public async Task<IActionResult> UpdateOrder([FromBody] OrdersDTO orderDTO)
         {
             var order = _mapper.Map<Orders>(orderDTO);
             var res = await _orderService.UpdateOrder(order);
@@ -77,7 +89,7 @@ namespace Oredering.API.Controllers
 
         // DELETE: /Ordering/{id} Delete existing Order
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteOrder(int id)
         {
             var res = await _orderService.DeleteOrder(id);
             if (res == null)

@@ -16,7 +16,10 @@ namespace Ordering.BLL.Services
         {
             _orderRpo = orderRpo;
         }
-
+        public async Task<IEnumerable<Orders>> GetAllOrdersByCustomerIdAsync(int customerId)
+        {
+            return await _orderRpo.GetAllOrdersByCustomerIdAsync(customerId);
+        }
         public async Task<IEnumerable<Orders>> GetAllOrders()
         {
             return await _orderRpo.GetAllAsync();

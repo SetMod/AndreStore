@@ -12,12 +12,12 @@ namespace Catalog.Infrastructure.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         private readonly IMongoCollection<T> _col;
-        public GenericRepository(IMongoDBSettings settings)
+        public GenericRepository(IMongoDBSettings settings, string CollectionName)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _col = database.GetCollection<T>(settings.CollectionName);
+            _col = database.GetCollection<T>(CollectionName);
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
